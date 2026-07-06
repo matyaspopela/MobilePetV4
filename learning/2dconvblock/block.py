@@ -27,8 +27,6 @@ class Conv2DManual(torch.autograd.Function):
 
         out_h,out_w = Conv2DManual.get_out_shape(height, width, padding, k_h, stride)
 
-        #TODO: implement proper operations for multiple filters.
-
         unf_X = F.unfold(X, (k_h, k_w), stride=stride, padding=padding)
         unf_W = W.reshape(c_out, k_h*k_w*c_in) #flat line of kernel tensors and 2d per c_out
 
@@ -56,25 +54,23 @@ class Conv2DManual(torch.autograd.Function):
 
         # kernel weights
         # dW equals dY * X-transposed
-        dY = dY.reshape(batch, c_out, out_h * out_w) # first reshape dY
-        X = F.unfold(X, (k_h, k_w), stride=stride, padding=padding) # unfold X
-        W = W.reshape(c_out, k_h * k_w * c_in) # reshape W. Now everything is in order with how we did matmul
+        dY = dY.reshape(batch, c_out, out_h * out_w)
+        X = F.unfold(X, (k_h, k_w), stride=stride, padding=padding)
+        W = W.reshape(c_out, k_h * k_w * c_in)
 
-        dW = torch.bmm(dY, X.transpose(-2,-1)) # note : transpose(-2,-1) swaps the last two dims
+        dW = torch.bmm(dY, X.transpose(-2,-1))
         dW = torch.einsum("abc->bc", dW) #ahh i fucking love this
-        dW = dW.reshape(c_out, c_in, out_h, out_w) #yippeee original kernel shape
+        dW = dW.reshape(c_out, c_in, k_h, k_w)
 
         # input
-        # same stuff as with weights, but we must "fold" X, so that the grad comes out in the *same shape as input*
-
         dX = torch.matmul(W.transpose(-2,-1), dY)
-        dX = F.fold(dX, output_shape=(height, width), kernel_size=(k_h,k_w), padding=padding, stride=stride)
+        dX = F.fold(dX, output_size=(height, width), kernel_size=(k_h,k_w), padding=padding, stride=stride)
 
 
         return dX, dW, dB, None, None
 
-        #note: bmm = batched matrix multiplication. No broadcasting, stricter rules than matmul, only operates on 2 3D Tensors
-        #TODO: glide over what dimension everything has, make sure everything is clear.
+
+
 
 
 
