@@ -9,7 +9,7 @@ class DepthwiseConv(torch.autograd.Function):
         ctx.save_for_backward(X, W_depth)
 
         batch, channels, height, width = X.shape
-        c_out, c_in, k_h, k_w = W_depth.shape # eg. 3 distinct filters, each has for an input dim.
+        c_out, c_in, k_h, k_w = W_depth.shape # eg. 3 distinct filters, each for an input dim.
 
         #assertions
         if k_h != k_w:
@@ -31,9 +31,6 @@ class DepthwiseConv(torch.autograd.Function):
         flat_W = W_depth.reshape(c_out, c_in, k_h*k_w)
 
         flat_Result = torch.einsum("cok, bckp -> bcp", flat_W,  unf_X)
-        # cryptid line note: this tells torch to go over the batches of X, then in inside the individual Channel dims,
-        # multiply and sum all elements across dim k (dot product) - syntax: if a letter is omitted then multiply and sum.
-        # letters that appear in both tensors are "Batch axes", that we iterate over. The rest are multiplied together using standard rules.
 
         Result = flat_Result.reshape(batch, c_out, out_h, out_w)
 
