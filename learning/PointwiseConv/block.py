@@ -8,6 +8,7 @@ class PointwiseConv(torch.autograd.Function):
     def forward(ctx, X, W):
         """
         X : (batch, c_in, height, width)
+
         W : (c_out, c_in)
         """
         b, c_in, h, w = X.shape

@@ -47,7 +47,7 @@ class Conv2DManual(torch.autograd.Function):
         c_out,c_in, k_h, k_w = W.shape
 
         # bias
-        # d_Y is shaped N, C_out, H_out, W_out -> we sum the "3D hypercubes" attached to c_out (my mental image)
+        # d_Y is shaped N, C_out, H_out, W_out -> we sum the "3D hypercubes" attached to c_out
         dB = torch.einsum("abcd->b", dY)
 
         out_h, out_w = Conv2DManual.get_out_shape(height, width, padding, k_h, stride)
@@ -59,7 +59,7 @@ class Conv2DManual(torch.autograd.Function):
         W = W.reshape(c_out, k_h * k_w * c_in)
 
         dW = torch.bmm(dY, X.transpose(-2,-1))
-        dW = torch.einsum("abc->bc", dW) #ahh i fucking love this
+        dW = torch.einsum("abc->bc", dW)
         dW = dW.reshape(c_out, c_in, k_h, k_w)
 
         # input

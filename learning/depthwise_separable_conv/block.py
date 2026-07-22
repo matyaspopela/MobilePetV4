@@ -60,7 +60,7 @@ class DepthwiseConv(torch.autograd.Function):
         flat_W = W_depth.reshape(c_out, c_in, k_h * k_w)
 
         dX = torch.einsum("cok, bcp -> bckp", flat_W, flat_dY)
-        dX = dX.reshape(batch, c_out * out_h * out_w, -1)
+        dX = dX.reshape(batch, c_out * k_h * k_w, -1)
         dX = F.fold(dX, output_size=(height, width), kernel_size=(k_h, k_w), stride=stride, padding=padding)
 
         return dX, dW, None, None, None
