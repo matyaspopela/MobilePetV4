@@ -3,7 +3,7 @@ import torch.nn.functional as F
 
 class DepthwiseConv(torch.autograd.Function):
     @staticmethod
-    def forward(ctx, X, W_depth, stride, padding):
+    def forward(ctx, X, W_depth,b , stride, padding):
         ctx.stride = stride
         ctx.padding = padding
         ctx.save_for_backward(X, W_depth)
@@ -33,6 +33,7 @@ class DepthwiseConv(torch.autograd.Function):
         flat_Result = torch.einsum("cok, bckp -> bcp", flat_W,  unf_X)
 
         Result = flat_Result.reshape(batch, c_out, out_h, out_w)
+        Result += b.reshape(1, c_out, 1, 1)
 
         return Result
 
@@ -63,8 +64,17 @@ class DepthwiseConv(torch.autograd.Function):
         dX = dX.reshape(batch, c_out * k_h * k_w, -1)
         dX = F.fold(dX, output_size=(height, width), kernel_size=(k_h, k_w), stride=stride, padding=padding)
 
-        return dX, dW, None, None, None
+        dB = torch.einsum("bchw -> c", dY)
 
+        return dX, dW, dB, None, None
+
+X = torch.randn(2, 4, 5, 5, dtype=torch.double, requires_grad=True)
+W = torch.randn(4, 1, 3, 3, dtype=torch.double, requires_grad=True)
+b = torch.randn(4, dtype=torch.double, requires_grad=True)
+torch.autograd.gradcheck(DepthwiseConv.apply, (X, W, b, 1, 1), eps=1e-6, atol=1e-4)
+
+
+# DEPRECATED
 class PointwiseConv(torch.autograd.Function):
     @staticmethod
     def forward(ctx, X, depth_kernel, b):
