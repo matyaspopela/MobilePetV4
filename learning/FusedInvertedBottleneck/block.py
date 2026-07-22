@@ -13,5 +13,5 @@ class FusedInvertedBottleneck(nn.Module):
 
     def forward(self, X):
         fused = Conv2D.apply(X, self.W_fused, stride=self.stride, padding=self.padding)
-        projected = PointwiseConv.apply(X, self.W_project)
+        projected = PointwiseConv.apply(fused, self.W_project)
         return projected
