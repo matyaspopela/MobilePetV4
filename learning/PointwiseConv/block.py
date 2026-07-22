@@ -2,7 +2,7 @@ import torch
 import torch.nn.functional as F
 from torch.nn.grad import conv2d_input, conv2d_weight
 
-
+#TODO add bias. Although its almost always omitted in mobilenet, it should be included
 class PointwiseConv(torch.autograd.Function):
     @staticmethod
     def forward(ctx, X, W):

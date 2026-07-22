@@ -2,7 +2,7 @@ import torch
 import torch.nn.functional as F
 import numpy as np
 
-class Conv2DManual(torch.autograd.Function):
+class Conv2D(torch.autograd.Function):
 
     @staticmethod
     def get_out_shape(height, width, padding, kernel_size, stride):
@@ -25,7 +25,7 @@ class Conv2DManual(torch.autograd.Function):
         if (c_in != channels):
             raise RuntimeError("channel count is not equal to kernel input channel count.")
 
-        out_h,out_w = Conv2DManual.get_out_shape(height, width, padding, k_h, stride)
+        out_h,out_w = Conv2D.get_out_shape(height, width, padding, k_h, stride)
 
         unf_X = F.unfold(X, (k_h, k_w), stride=stride, padding=padding)
         unf_W = W.reshape(c_out, k_h*k_w*c_in) #flat line of kernel tensors and 2d per c_out
@@ -50,7 +50,7 @@ class Conv2DManual(torch.autograd.Function):
         # d_Y is shaped N, C_out, H_out, W_out -> we sum the "3D hypercubes" attached to c_out
         dB = torch.einsum("abcd->b", dY)
 
-        out_h, out_w = Conv2DManual.get_out_shape(height, width, padding, k_h, stride)
+        out_h, out_w = Conv2D.get_out_shape(height, width, padding, k_h, stride)
 
         # kernel weights
         # dW equals dY * X-transposed

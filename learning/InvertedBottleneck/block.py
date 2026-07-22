@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 from ..PointwiseConv.block import PointwiseConv
-from ..depthwise_separable_conv.block import DepthwiseConv
+from ..DepthwiseConv.block import DepthwiseConv
 
 
 
