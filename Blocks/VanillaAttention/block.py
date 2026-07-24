@@ -59,14 +59,14 @@ class Attention(torch.autograd.Function):
          tokenized_input) = ctx.saved_tensors
 
         batch, c_in, height, width = ctx.input_shape
+        d = query_weights.shape[1]
 
         d_tokens_modified = grad_output.reshape(batch, c_in, height * width).transpose(-1,-2)
 
         d_projections_modified = d_tokens_modified @ projection_weights.transpose(-1, -2)
         d_projection_weights = torch.einsum("bnd, bnc -> dc", projections_modified, d_tokens_modified)
 
-
-        d_attention = d_projections_modified @ value_map.transpose(-1, -2)
+        d_attention = (d_projections_modified @ value_map.transpose(-1, -2)) * (d ** -0.5)
         d_value_map = attention.transpose(-1, -2) @ d_projections_modified
 
         row_averages = (attention * d_attention).sum(dim=(-1), keepdim=True)
@@ -80,7 +80,12 @@ class Attention(torch.autograd.Function):
         d_query_weights = torch.einsum("bnc, bnd -> cd", tokenized_input, d_query_map)
         d_key_weights = torch.einsum("bnc, bnd -> cd",tokenized_input, d_key_map)
         d_value_weights = torch.einsum("bnc, bnd -> cd", tokenized_input, d_value_map)
-        d_tokenized_input = d_query_map @ query_weights.transpose(-1, -2)
+
+        d_tokenized_input_q = d_query_map @ query_weights.transpose(-1, -2)
+        d_tokenized_input_k = d_key_map @ key_weights.transpose(-1, -2)
+        d_tokenized_input_v = d_value_map @ value_weights.transpose(-1, -2)
+
+        d_tokenized_input = d_tokenized_input_q + d_tokenized_input_k + d_tokenized_input_v
 
         d_input = d_tokenized_input.transpose(-1, -2).reshape(batch, c_in, height, width)
 
