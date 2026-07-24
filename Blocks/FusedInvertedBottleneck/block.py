@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from ..ConvBlock.block import Conv2D
+from ..Conv.block import Conv2D
 from ..PointwiseConv.block import PointwiseConv
 
 class FusedInvertedBottleneck(nn.Module):
