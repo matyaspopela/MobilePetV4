@@ -55,7 +55,7 @@ class Attention(torch.autograd.Function):
 
     @staticmethod
     @once_differentiable
-    @custom_bwd(device_type="cuda", cast_inputs=torch.bfloat16)
+    @custom_bwd(device_type="cuda")
     def backward(ctx, grad_output):
 
         (query_weights,
