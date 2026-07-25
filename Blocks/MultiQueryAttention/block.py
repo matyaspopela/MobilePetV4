@@ -21,15 +21,15 @@ class MultiQueryAttention(torch.autograd.Function):
     """
 
     @staticmethod
-    def forward(ctx, input, downsampled, w_q, w_kv, w_p):
+    def forward(ctx, input, downsampled, w_q, w_kv, w_p, num_heads):
         ctx.input_shape = batch, channels, height, width = input.shape
-        v = w_p.shape[0]
-        d = w_kv.shape[1] - v
-        h = w_q.shape[1] / d
+        v = "PLACEHOLDER"
+        d = "PLACEHOLDER"
+        h = "PLACEHOLDER"
 
 
-        tokenized = torch.einsum("bchw -> bnc", input)
-        downsampled_tokenized = torch.einsum("bchw -> bnc", downsampled)
+        tokenized = input.flatten(2).transpose(1, 2)   # (b,c,H,W) -> (b,c,HW) -> (b,HW,c)
+        downsampled_tokenized = downsampled.flatten(2).transpose(1, 2)   # (b,c,H,W) -> (b,c,HW) -> (b,HW,c)
 
         query = torch.matmul(tokenized, w_q).reshape(batch, height * width, h, d).transpose(1, 2)
         kv_fused = torch.matmul(downsampled_tokenized, w_kv).reshape(batch, 1, (height * width) / 4, d+v)
