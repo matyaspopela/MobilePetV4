@@ -18,13 +18,6 @@ class Attention(torch.autograd.Function):
         c_w, d = query_weights.shape
         ctx.scale = (d ** -0.5)
 
-    #    if c_w != c_in:
-    #         raise RuntimeError()
-    #    if not (d == key_weights.shape[1]):
-    #         raise RuntimeError()
-    #     if projection_weights.shape[1] != c_in:
-    #         raise RuntimeError()
-
         tokenized_input = input.reshape(batch, c_in, height * width).transpose(-1,-2) # : B, N, C
 
         query_map = torch.matmul(tokenized_input, query_weights)
