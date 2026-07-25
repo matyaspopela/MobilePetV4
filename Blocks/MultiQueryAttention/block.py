@@ -35,7 +35,7 @@ class MultiQueryAttention(torch.autograd.Function):
         kv_fused = torch.matmul(downsampled_tokenized, w_kv).reshape(batch, 1, (height * width) / 4, d+v)
         key = kv_fused[..., :d]
         value = kv_fused[..., d:]
-
+        #TODO: MISSES SCALING by 1/sqrt(d), misses save for backward
         attention_map = torch.matmul(query, key.transpose(-1, -2))
         attention = torch.softmax(attention_map, dim=-1)
 
