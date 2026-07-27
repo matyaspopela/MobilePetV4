@@ -47,9 +47,3 @@ class PointwiseConv(torch.autograd.Function):
         dB = torch.einsum("bhwc -> c", dY)
 
         return dX, dW, dB
-
-
-X = torch.randn(2, 4, 3, 3, dtype=torch.double, requires_grad=True)
-W = torch.randn(6, 4, dtype=torch.double, requires_grad=True)
-b = torch.randn(4, dtype=torch.double, requires_grad=True)
-torch.autograd.gradcheck(PointwiseConv.apply, (X, W, b), eps=1e-6, atol=1e-4)

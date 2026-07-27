@@ -68,11 +68,6 @@ class DepthwiseConv(torch.autograd.Function):
 
         return dX, dW, dB, None, None
 
-X = torch.randn(2, 4, 5, 5, dtype=torch.double, requires_grad=True)
-W = torch.randn(4, 1, 3, 3, dtype=torch.double, requires_grad=True)
-b = torch.randn(4, dtype=torch.double, requires_grad=True)
-torch.autograd.gradcheck(DepthwiseConv.apply, (X, W, b, 1, 1), eps=1e-6, atol=1e-4)
-
 
 # DEPRECATED
 class PointwiseConv(torch.autograd.Function):

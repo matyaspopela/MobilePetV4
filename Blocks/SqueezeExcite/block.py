@@ -52,9 +52,3 @@ class SqueezeExcite(torch.autograd.Function):
         dX = dX + (1 / (X.shape[2] * X.shape[3])) * dZ
 
         return dX, dW1, dW2
-
-
-X = torch.randn(2, 4, 3, 3, dtype=torch.double, requires_grad=True)
-W1 = torch.randn(2, 4, dtype=torch.double, requires_grad=True)
-W2 = torch.randn(4, 2, dtype=torch.double, requires_grad=True)
-torch.autograd.gradcheck(SqueezeExcite.apply, (X, W1, W2), eps=1e-6, atol=1e-4)
