@@ -10,12 +10,27 @@ class Conv2D(torch.autograd.Function):
         out_w = (width + 2 * padding - kernel_size) // stride + 1
         return out_h, out_w
 
+    @staticmethod
+    def resolve_padding(padding, kernel_size):
+        """
+        padding=None means "same": keep the spatial size at stride 1, and give
+        ceil(H / stride) when strided. Only exact for odd kernels -- an even
+        kernel needs asymmetric padding, which we cannot express here.
+        """
+        if padding is not None:
+            return padding
+        if kernel_size % 2 == 0:
+            raise RuntimeError(
+                f"Error: padding=None needs an odd kernel to stay 'same', got {kernel_size}"
+            )
+        return kernel_size // 2
+
 
     @staticmethod
     def forward(ctx, X, W, b, stride, padding):
-        ctx.save_for_backward(X, W, b)
+        ctx.save_for_backward(X, W)  # b is never read in backward, only its presence
+        ctx.has_bias = b is not None
         ctx.stride = stride
-        ctx.padding = padding
         #dims & setup
         batch, channels, height, width = X.shape
         c_out,c_in, k_h, k_w = W.shape
@@ -25,22 +40,26 @@ class Conv2D(torch.autograd.Function):
         if (c_in != channels):
             raise RuntimeError("channel count is not equal to kernel input channel count.")
 
+        padding = Conv2D.resolve_padding(padding, k_h)
+        ctx.padding = padding  # store the resolved value -- backward unfolds with it
+
         out_h,out_w = Conv2D.get_out_shape(height, width, padding, k_h, stride)
 
         unf_X = F.unfold(X, (k_h, k_w), stride=stride, padding=padding)
         unf_W = W.reshape(c_out, k_h*k_w*c_in) #flat line of kernel tensors and 2d per c_out
 
         flat_Res = torch.matmul(unf_W, unf_X)
-        b = b.reshape(1, c_out, 1, 1) #this lines the right column up for broadcasting. (we apply per
 
         Result = flat_Res.reshape(batch, c_out, out_h, out_w)
-        Result += b
+        if b is not None:
+            #this lines the right column up for broadcasting. (we apply per c_out)
+            Result += b.reshape(1, c_out, 1, 1)
 
         return Result
 
     @staticmethod
     def backward(ctx, dY):
-        X, W, b = ctx.saved_tensors
+        X, W = ctx.saved_tensors
         padding = ctx.padding
         stride = ctx.stride
         batch, channels, height, width = X.shape
@@ -48,7 +67,7 @@ class Conv2D(torch.autograd.Function):
 
         # bias
         # d_Y is shaped N, C_out, H_out, W_out -> we sum the "3D hypercubes" attached to c_out
-        dB = torch.einsum("abcd->b", dY)
+        dB = torch.einsum("abcd->b", dY) if ctx.has_bias else None
 
         out_h, out_w = Conv2D.get_out_shape(height, width, padding, k_h, stride)
 

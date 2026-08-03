@@ -12,6 +12,7 @@ class PointwiseConv(torch.autograd.Function):
         """
         batch, c_in, h, w = X.shape
         c_out, c_in = W.shape
+        ctx.has_bias = b is not None
         ctx.save_for_backward(X, W)
 
         X = torch.einsum("bchw -> bhwc", X)
@@ -19,8 +20,8 @@ class PointwiseConv(torch.autograd.Function):
         flat_result = F.linear(reshaped_X, W) # shape : (b * h * w, c_out)
         result = flat_result.reshape(batch, h, w, c_out)
         result = torch.einsum("bhwc -> bchw", result)
-        b = b.reshape(1, c_out, 1, 1)
-        result += b
+        if b is not None:
+            result += b.reshape(1, c_out, 1, 1)
 
         return result
 
@@ -41,6 +42,6 @@ class PointwiseConv(torch.autograd.Function):
         dW =  flat_dY.transpose(0, 1) @ reshaped_X
 
         #bias
-        dB = torch.einsum("bhwc -> c", dY)
+        dB = torch.einsum("bhwc -> c", dY) if ctx.has_bias else None
 
         return dX, dW, dB

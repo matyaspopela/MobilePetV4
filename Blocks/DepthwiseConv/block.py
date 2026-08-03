@@ -2,10 +2,26 @@ import torch
 import torch.nn.functional as F
 
 class DepthwiseConv(torch.autograd.Function):
+
+    @staticmethod
+    def resolve_padding(padding, kernel_size):
+        """
+        padding=None means "same": keep the spatial size at stride 1, and give
+        ceil(H / stride) when strided. Only exact for odd kernels -- an even
+        kernel needs asymmetric padding, which we cannot express here.
+        """
+        if padding is not None:
+            return padding
+        if kernel_size % 2 == 0:
+            raise RuntimeError(
+                f"Error: padding=None needs an odd kernel to stay 'same', got {kernel_size}"
+            )
+        return kernel_size // 2
+
     @staticmethod
     def forward(ctx, X, W_depth,b , stride, padding):
         ctx.stride = stride
-        ctx.padding = padding
+        ctx.has_bias = b is not None
         ctx.save_for_backward(X, W_depth)
 
         batch, channels, height, width = X.shape
@@ -18,6 +34,9 @@ class DepthwiseConv(torch.autograd.Function):
             raise RuntimeError("Error: Different amount of spatial kernels than input channels")
         if c_in != 1:
             raise RuntimeError("Error: Kernel depth is not 1, would mix channels in Depthwise step")
+
+        padding = DepthwiseConv.resolve_padding(padding, k_h)
+        ctx.padding = padding  # store the resolved value -- backward unfolds with it
 
         #output shape
         out_h = (height + 2 * padding - k_h) // stride + 1
@@ -33,7 +52,8 @@ class DepthwiseConv(torch.autograd.Function):
         flat_Result = torch.einsum("cok, bckp -> bcp", flat_W,  unf_X)
 
         Result = flat_Result.reshape(batch, c_out, out_h, out_w)
-        Result += b.reshape(1, c_out, 1, 1)
+        if b is not None:
+            Result += b.reshape(1, c_out, 1, 1)
 
         return Result
 
@@ -64,7 +84,7 @@ class DepthwiseConv(torch.autograd.Function):
         dX = dX.reshape(batch, c_out * k_h * k_w, -1)
         dX = F.fold(dX, output_size=(height, width), kernel_size=(k_h, k_w), stride=stride, padding=padding)
 
-        dB = torch.einsum("bchw -> c", dY)
+        dB = torch.einsum("bchw -> c", dY) if ctx.has_bias else None
 
         return dX, dW, dB, None, None
 
