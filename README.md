@@ -1,8 +1,4 @@
-# MobilePetV4
+## Mobile*Pet*V4
 
-my **_learning project_** - recreating the MobileNetV4 architecture from scratch, writing own forward & backward methods.
-
-Currently im in the phase of **just making it work, while understanding whats going on**.
-
-*in the future i do wanna optimize it and learn about the little tweaks that make it supa fast*
-
+my pet project -> replicating the MNv4 architecture from scratch in python.
+first time touching attention mechanisms, a good new skill.
