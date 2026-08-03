@@ -1,60 +1,57 @@
 import torch
 import torch.nn as nn
 
-from ..DepthwiseConv.block import DepthwiseConv
-from ..PointwiseConv.block import PointwiseConv
+from ..ConvBNAct.block import ConvBNAct
+
 
 class UniversalInvertedBottleneck(nn.Module):
+
     def __init__(self, c_in, c_mid, c_out,
                  dw_before=False,
                  dw_after=True,
-                 dw_before_kernel=(3,3),
-                 dw_before_padding=0,
-                 dw_before_stride=1,
-                 dw_after_kernel=(3,3),
-                 dw_after_padding=0,
-                 dw_after_stride=1):
-
+                 dw_before_kernel=3,
+                 dw_after_kernel=3,
+                 stride=1,
+                 act="relu"):
         super().__init__()
 
-        # learnable
-        if dw_before:
-            self.W_dw_before = nn.Parameter(torch.randn(c_in, 1, *dw_before_kernel) * 0.01)
-            self.b_dw_before = nn.Parameter(torch.randn(c_in) * 0.01)
-            self.dw_before_padding = dw_before_padding
-            self.dw_before_stride = dw_before_stride
-        else:
-            self.register_parameter("W_dw_before", None)
+        if not dw_before and not dw_after and stride != 1:
+            raise RuntimeError("Error: stride > 1 needs at least one depthwise conv")
 
-        self.W_expand = nn.Parameter(torch.randn(c_mid, c_in) * 0.01)
-        self.b_expand = nn.Parameter(torch.randn(c_mid) * 0.01)
+        # whichever depthwise comes first carries the stride
+        before_stride = stride if dw_before else 1
+        after_stride = stride if (dw_after and not dw_before) else 1
 
-        if dw_after:
-            self.W_dw_after = nn.Parameter(torch.randn(c_mid, 1, *dw_after_kernel) * 0.01)
-            self.b_dw_after = nn.Parameter(torch.randn(c_mid) * 0.01)
-            self.dw_after_padding = dw_after_padding
-            self.dw_after_stride = dw_after_stride
-        else:
-            self.register_parameter("W_dw_after", None)
+        self.dw_before = ConvBNAct(c_in, c_in, "depthwise", dw_before_kernel,
+                                   before_stride, act=act) if dw_before else None
 
-        self.W_project = nn.Parameter(torch.randn(c_out, c_mid) * 0.01)
-        self.b_project = nn.Parameter(torch.randn(c_out) * 0.01)
+        self.expand = ConvBNAct(c_in, c_mid, "pointwise", act=act)
+
+        self.dw_after = ConvBNAct(c_mid, c_mid, "depthwise", dw_after_kernel,
+                                  after_stride, act=act) if dw_after else None
+
+        # linear bottleneck: the projection is deliberately NOT activated
+        self.project = ConvBNAct(c_mid, c_out, "pointwise", act=None)
+
+        self.use_residual = stride == 1 and c_in == c_out
 
     def forward(self, X):
-        if self.W_dw_before is not None:
-            depth_before = DepthwiseConv.apply(X, self.W_dw_before, self.b_dw_before, self.dw_before_stride, self.dw_before_padding)
-            expand = PointwiseConv.apply(depth_before, self.W_expand, self.b_expand)
-        else:
-            expand = PointwiseConv.apply(X, self.W_expand, self.b_expand)
+        out = X
 
-        if self.W_dw_after is not None:
-            depth_after = DepthwiseConv.apply(expand, self.W_dw_after, self.b_dw_after, self.dw_after_stride, self.dw_after_padding)
-            projected = PointwiseConv.apply(depth_after, self.W_project, self.b_project)
-        else:
-            projected = PointwiseConv.apply(expand, self.W_project, self.b_project)
+        if self.dw_before is not None:
+            out = self.dw_before(out)
 
+        out = self.expand(out)
 
-        return projected
+        if self.dw_after is not None:
+            out = self.dw_after(out)
 
+        out = self.project(out)
 
+        if self.use_residual:
+            out = out + X
 
+        return out
+
+    def extra_repr(self):
+        return f"residual={self.use_residual}"
