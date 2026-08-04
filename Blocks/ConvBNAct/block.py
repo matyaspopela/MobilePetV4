@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from ..BatchNorm.bnmodule import BatchNorm2d
+from ..BatchNorm.module import BatchNorm2d
 from ..Conv.block import Conv2D
 from ..DepthwiseConv.block import DepthwiseConv
 from ..PointwiseConv.block import PointwiseConv
