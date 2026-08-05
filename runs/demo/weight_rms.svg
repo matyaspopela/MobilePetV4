@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380">
+<rect width="760" height="380" fill="#fbfbfc" rx="8"/>
+<text x="68" y="26" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="600" fill="#2f3337">Does the decoupled decay actually bite?</text>
+<text x="68" y="42" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11.5" fill="#6b7280">Same seed, same data, only weight_decay differs. RMS of the &gt;=2D group. Ends 4.2% lower with decay on.</text>
+<line x1="68" y1="281.7" x2="736" y2="281.7" stroke="#e6e8eb" stroke-width="1"/>
+<text x="58" y="285.2" text-anchor="end" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">0.0700</text>
+<line x1="68" y1="222.1" x2="736" y2="222.1" stroke="#e6e8eb" stroke-width="1"/>
+<text x="58" y="225.6" text-anchor="end" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">0.0710</text>
+<line x1="68" y1="162.5" x2="736" y2="162.5" stroke="#e6e8eb" stroke-width="1"/>
+<text x="58" y="166.0" text-anchor="end" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">0.0720</text>
+<line x1="68" y1="103.0" x2="736" y2="103.0" stroke="#e6e8eb" stroke-width="1"/>
+<text x="58" y="106.5" text-anchor="end" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">0.0730</text>
+<text x="128.7" y="344" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">2</text>
+<text x="250.2" y="344" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">4</text>
+<text x="371.6" y="344" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">6</text>
+<text x="493.1" y="344" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">8</text>
+<text x="614.5" y="344" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">10</text>
+<text x="736.0" y="344" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">12</text>
+<line x1="68" y1="324" x2="736" y2="324" stroke="#b9bec4" stroke-width="1"/>
+<text x="402" y="366" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11.5" fill="#6b7280">epoch</text>
+<text transform="translate(18 188) rotate(-90)" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11.5" fill="#6b7280">RMS weight (decayed group)</text>
+<polyline points="68.0,265.8 128.7,261.0 189.5,262.7 250.2,268.5 310.9,282.7 371.6,297.1 432.4,297.7 493.1,294.8 553.8,271.4 614.5,277.5 675.3,256.4 736.0,262.7" fill="none" stroke="#2f6fb5" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="68.0" cy="265.8" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="128.7" cy="261.0" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="189.5" cy="262.7" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="250.2" cy="268.5" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="310.9" cy="282.7" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="371.6" cy="297.1" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="432.4" cy="297.7" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="493.1" cy="294.8" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="553.8" cy="271.4" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="614.5" cy="277.5" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="675.3" cy="256.4" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="736.0" cy="262.7" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<polyline points="68.0,245.0 128.7,221.2 189.5,204.6 250.2,196.0 310.9,185.4 371.6,161.1 432.4,138.7 493.1,121.1 553.8,118.9 614.5,117.3 675.3,106.8 736.0,78.3" fill="none" stroke="#c77d34" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="68.0" cy="245.0" r="2.6" fill="#fbfbfc" stroke="#c77d34" stroke-width="1.8"/>
+<circle cx="128.7" cy="221.2" r="2.6" fill="#fbfbfc" stroke="#c77d34" stroke-width="1.8"/>
+<circle cx="189.5" cy="204.6" r="2.6" fill="#fbfbfc" stroke="#c77d34" stroke-width="1.8"/>
+<circle cx="250.2" cy="196.0" r="2.6" fill="#fbfbfc" stroke="#c77d34" stroke-width="1.8"/>
+<circle cx="310.9" cy="185.4" r="2.6" fill="#fbfbfc" stroke="#c77d34" stroke-width="1.8"/>
+<circle cx="371.6" cy="161.1" r="2.6" fill="#fbfbfc" stroke="#c77d34" stroke-width="1.8"/>
+<circle cx="432.4" cy="138.7" r="2.6" fill="#fbfbfc" stroke="#c77d34" stroke-width="1.8"/>
+<circle cx="493.1" cy="121.1" r="2.6" fill="#fbfbfc" stroke="#c77d34" stroke-width="1.8"/>
+<circle cx="553.8" cy="118.9" r="2.6" fill="#fbfbfc" stroke="#c77d34" stroke-width="1.8"/>
+<circle cx="614.5" cy="117.3" r="2.6" fill="#fbfbfc" stroke="#c77d34" stroke-width="1.8"/>
+<circle cx="675.3" cy="106.8" r="2.6" fill="#fbfbfc" stroke="#c77d34" stroke-width="1.8"/>
+<circle cx="736.0" cy="78.3" r="2.6" fill="#fbfbfc" stroke="#c77d34" stroke-width="1.8"/>
+<rect x="72" y="40" width="11" height="3" rx="1.5" fill="#2f6fb5"/>
+<text x="89" y="45" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11.5" fill="#2f3337">wd = 0.05</text>
+<rect x="157.4" y="40" width="11" height="3" rx="1.5" fill="#c77d34"/>
+<text x="174.4" y="45" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11.5" fill="#2f3337">wd = 0.0</text>
+</svg>

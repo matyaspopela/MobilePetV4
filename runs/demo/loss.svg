@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380">
+<rect width="760" height="380" fill="#fbfbfc" rx="8"/>
+<text x="68" y="26" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="15" font-weight="600" fill="#2f3337">Cross-entropy loss</text>
+<text x="68" y="42" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11.5" fill="#6b7280">MNv4-Conv-Small, 2,499,430 params, 64px, batch 32, AdamW lr=0.002 wd=0.05</text>
+<line x1="68" y1="297.7" x2="736" y2="297.7" stroke="#e6e8eb" stroke-width="1"/>
+<text x="58" y="301.2" text-anchor="end" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">0.00</text>
+<line x1="68" y1="192.6" x2="736" y2="192.6" stroke="#e6e8eb" stroke-width="1"/>
+<text x="58" y="196.1" text-anchor="end" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">1.00</text>
+<line x1="68" y1="87.5" x2="736" y2="87.5" stroke="#e6e8eb" stroke-width="1"/>
+<text x="58" y="91.0" text-anchor="end" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">2.00</text>
+<text x="128.7" y="344" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">2</text>
+<text x="250.2" y="344" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">4</text>
+<text x="371.6" y="344" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">6</text>
+<text x="493.1" y="344" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">8</text>
+<text x="614.5" y="344" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">10</text>
+<text x="736.0" y="344" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#6b7280">12</text>
+<line x1="68" y1="324" x2="736" y2="324" stroke="#b9bec4" stroke-width="1"/>
+<text x="402" y="366" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11.5" fill="#6b7280">epoch</text>
+<text transform="translate(18 188) rotate(-90)" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11.5" fill="#6b7280">loss</text>
+<polyline points="68.0,129.9 128.7,254.5 189.5,269.8 250.2,284.6 310.9,287.9 371.6,291.3 432.4,287.8 493.1,284.9 553.8,275.0 614.5,291.2 675.3,283.9 736.0,288.3" fill="none" stroke="#2f6fb5" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="68.0" cy="129.9" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="128.7" cy="254.5" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="189.5" cy="269.8" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="250.2" cy="284.6" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="310.9" cy="287.9" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="371.6" cy="291.3" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="432.4" cy="287.8" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="493.1" cy="284.9" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="553.8" cy="275.0" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="614.5" cy="291.2" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="675.3" cy="283.9" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<circle cx="736.0" cy="288.3" r="2.6" fill="#fbfbfc" stroke="#2f6fb5" stroke-width="1.8"/>
+<polyline points="68.0,78.3 128.7,258.5 189.5,290.5 250.2,296.0 310.9,282.0 371.6,295.8 432.4,291.0 493.1,280.3 553.8,278.6 614.5,297.6 675.3,297.3 736.0,293.3" fill="none" stroke="#d1495b" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="68.0" cy="78.3" r="2.6" fill="#fbfbfc" stroke="#d1495b" stroke-width="1.8"/>
+<circle cx="128.7" cy="258.5" r="2.6" fill="#fbfbfc" stroke="#d1495b" stroke-width="1.8"/>
+<circle cx="189.5" cy="290.5" r="2.6" fill="#fbfbfc" stroke="#d1495b" stroke-width="1.8"/>
+<circle cx="250.2" cy="296.0" r="2.6" fill="#fbfbfc" stroke="#d1495b" stroke-width="1.8"/>
+<circle cx="310.9" cy="282.0" r="2.6" fill="#fbfbfc" stroke="#d1495b" stroke-width="1.8"/>
+<circle cx="371.6" cy="295.8" r="2.6" fill="#fbfbfc" stroke="#d1495b" stroke-width="1.8"/>
+<circle cx="432.4" cy="291.0" r="2.6" fill="#fbfbfc" stroke="#d1495b" stroke-width="1.8"/>
+<circle cx="493.1" cy="280.3" r="2.6" fill="#fbfbfc" stroke="#d1495b" stroke-width="1.8"/>
+<circle cx="553.8" cy="278.6" r="2.6" fill="#fbfbfc" stroke="#d1495b" stroke-width="1.8"/>
+<circle cx="614.5" cy="297.6" r="2.6" fill="#fbfbfc" stroke="#d1495b" stroke-width="1.8"/>
+<circle cx="675.3" cy="297.3" r="2.6" fill="#fbfbfc" stroke="#d1495b" stroke-width="1.8"/>
+<circle cx="736.0" cy="293.3" r="2.6" fill="#fbfbfc" stroke="#d1495b" stroke-width="1.8"/>
+<rect x="72" y="40" width="11" height="3" rx="1.5" fill="#2f6fb5"/>
+<text x="89" y="45" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11.5" fill="#2f3337">train</text>
+<rect x="131.0" y="40" width="11" height="3" rx="1.5" fill="#d1495b"/>
+<text x="148.0" y="45" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="11.5" fill="#2f3337">val</text>
+</svg>
