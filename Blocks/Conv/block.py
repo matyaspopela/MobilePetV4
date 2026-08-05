@@ -13,9 +13,6 @@ class Conv2D(torch.autograd.Function):
     @staticmethod
     def resolve_padding(padding, kernel_size):
         """
-        padding=None means "same": keep the spatial size at stride 1, and give
-        ceil(H / stride) when strided. Only exact for odd kernels -- an even
-        kernel needs asymmetric padding, which we cannot express here.
         """
         if padding is not None:
             return padding
@@ -65,8 +62,7 @@ class Conv2D(torch.autograd.Function):
         batch, channels, height, width = X.shape
         c_out,c_in, k_h, k_w = W.shape
 
-        # bias
-        # d_Y is shaped N, C_out, H_out, W_out -> we sum the "3D hypercubes" attached to c_out
+        #bias
         dB = torch.einsum("abcd->b", dY) if ctx.has_bias else None
 
         out_h, out_w = Conv2D.get_out_shape(height, width, padding, k_h, stride)
