@@ -42,7 +42,7 @@ python scripts/train_demo.py
 python scripts/plot_run.py
 ```
 
-six generated shape classes at 64px, nothing to download. 12 epochs, 2.7 min on
+six generated shape classes at 64px. 12 epochs, 2.7 min on
 CPU, 15.3% at init up to ~99%.
 
 ![loss](runs/demo/loss.svg)
@@ -58,8 +58,6 @@ python scripts/train_demo.py --wd 0.0 --out runs/nodecay
 
 ![weight decay](runs/demo/weight_rms.svg)
 
-charts are hand-written SVG so the repo does not pull in matplotlib for three line
-plots.
 
 ### not done
 
